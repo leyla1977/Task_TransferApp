@@ -2,30 +2,21 @@
 Task_TransferApp/
 │ 
 ├── backend/        # Spring Boot приложение/
-│ 
-│   ├── src/main/java/ru.netology.springBootDemo
+│ │   ├── src/main/java/ru.netology.springBootDemo
 │           ├──configuration
-│ 
 │           ├──controller
-│ 
 │           ├──model
-│ 
 │           ├──service
-│ 
 │   ├── src/main/resource/application.properties - основные настройки
 │
 │   ├── src/test/java/ru.netology.springBootDemo
 │ 
 │           ├──controller    # Unit-тесты с Mockito
-│            
-│           ├──integration   # Интеграционные тесты с Testcontainers
-│           │           
-│           ├──model
-│           │           
+│           ├──integration   # Интеграционные тесты с Testcontainers      
+│           ├──model         
 │           ├──service├      # Unit-тесты с Mockito
 
 │   ├── src/test/resource/application-test.properties - настройки для тестов
-│   │
 │   ├── target/
 │   ├── Dockerfile
 │   ├── transfer.log        # Лог файл

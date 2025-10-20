@@ -1,8 +1,8 @@
 **Transfer Service - REST API для переводов между картами**
 Task_TransferApp/
-│ 
-├── backend/        # Spring Boot приложение/
-│ │   ├── src/main/java/ru.netology.springBootDemo
+
+├── backend/        # Spring Boot приложение/ 
+│   ├── src/main/java/ru.netology.springBootDemo
 │           ├──configuration
 │           ├──controller
 │           ├──model

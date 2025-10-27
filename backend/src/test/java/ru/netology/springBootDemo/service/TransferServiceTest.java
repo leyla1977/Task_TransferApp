@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
+import ru.netology.springBootDemo.exception.InvalidCardDataException;
+import ru.netology.springBootDemo.exception.OperationNotFoundException;
 import ru.netology.springBootDemo.model.TransferRequest;
 import ru.netology.springBootDemo.model.TransferResponse;
 import ru.netology.springBootDemo.model.Amount;
@@ -52,7 +54,7 @@ class TransferServiceTest {
         request.setAmount(amount);
 
         // When & Then
-        assertThrows(IllegalArgumentException.class, () -> transferService.transfer(request));
+        assertThrows(InvalidCardDataException.class, () -> transferService.transfer(request));
     }
 
     @Test
@@ -68,7 +70,7 @@ class TransferServiceTest {
         request.setAmount(amount);
 
         // When & Then
-        assertThrows(IllegalArgumentException.class, () -> transferService.transfer(request));
+        assertThrows(InvalidCardDataException.class, () -> transferService.transfer(request));
     }
 
     @Test
@@ -106,6 +108,6 @@ class TransferServiceTest {
         confirmRequest.setCode("0000");
 
         // When & Then
-        assertThrows(IllegalArgumentException.class, () -> transferService.confirm(confirmRequest));
+        assertThrows(OperationNotFoundException.class, () -> transferService.confirm(confirmRequest));
     }
 }

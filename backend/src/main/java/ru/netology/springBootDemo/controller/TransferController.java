@@ -1,11 +1,13 @@
 package ru.netology.springBootDemo.controller;
 
-import ru.netology.springBootDemo.model.*;
-import ru.netology.springBootDemo.service.TransferService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ProblemDetail;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+import ru.netology.springBootDemo.model.TransferRequest;
+import ru.netology.springBootDemo.model.ConfirmRequest;
+import ru.netology.springBootDemo.model.TransferResponse;
+import ru.netology.springBootDemo.service.TransferService;
 
 @RestController
 public class TransferController {
@@ -17,42 +19,14 @@ public class TransferController {
     }
 
     @PostMapping("/transfer")
-    public ResponseEntity<?> transfer(@RequestBody TransferRequest request) {
-        try {
-            TransferResponse response = service.transfer(request);
-            return ResponseEntity.ok(response);
-        } catch (IllegalArgumentException e) {
-            ProblemDetail problem = ProblemDetail.forStatusAndDetail(
-                    HttpStatus.BAD_REQUEST,
-                    "Invalid input: " + e.getMessage()
-            );
-            return ResponseEntity.badRequest().body(problem);
-        } catch (Exception e) {
-            ProblemDetail problem = ProblemDetail.forStatusAndDetail(
-                    HttpStatus.INTERNAL_SERVER_ERROR,
-                    "Transfer failed: " + e.getMessage()
-            );
-            return ResponseEntity.internalServerError().body(problem);
-        }
+    public ResponseEntity<TransferResponse> transfer(@RequestBody TransferRequest request) {
+        TransferResponse response = service.transfer(request);
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/confirmOperation")
-    public ResponseEntity<?> confirm(@RequestBody ConfirmRequest request) {
-        try {
-            TransferResponse response = service.confirm(request);
-            return ResponseEntity.ok(response);
-        } catch (IllegalArgumentException e) {
-            ProblemDetail problem = ProblemDetail.forStatusAndDetail(
-                    HttpStatus.BAD_REQUEST,
-                    "Invalid code or operationId"
-            );
-            return ResponseEntity.badRequest().body(problem);
-        } catch (Exception e) {
-            ProblemDetail problem = ProblemDetail.forStatusAndDetail(
-                    HttpStatus.INTERNAL_SERVER_ERROR,
-                    "Confirmation failed: " + e.getMessage()
-            );
-            return ResponseEntity.internalServerError().body(problem);
-        }
+    public ResponseEntity<TransferResponse> confirm(@RequestBody ConfirmRequest request) {
+        TransferResponse response = service.confirm(request);
+        return ResponseEntity.ok(response);
     }
 }

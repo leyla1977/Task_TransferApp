@@ -1,21 +1,5 @@
-version: '3.8'
-
+version: '3.9'
 services:
-  backend:
-    build: ./backend
-    container_name: transfer-backend
-    ports:
-      - "5500:5500"
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/transferdb
-      - SPRING_DATASOURCE_USERNAME=user
-      - SPRING_DATASOURCE_PASSWORD=password
-      - SPRING_PROFILES_ACTIVE=docker
-    depends_on:
-      - db
-    networks:
-      - transfer-network
-
   db:
     image: postgres:13
     container_name: transfer-db
@@ -27,6 +11,38 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - transfer-network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: transfer-backend
+    ports:
+      - "5500:5500"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/transferdb
+      - SPRING_DATASOURCE_USERNAME=user
+      - SPRING_DATASOURCE_PASSWORD=password
+      - SERVER_PORT=8080
+    depends_on:
+      - db
+    networks:
+      - transfer-network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: transfer-frontend
+    ports:
+      - "3000:80"    # Правильно: внешний 3000 -> внутренний 80 (nginx)
+    environment:
+      - REACT_APP_API_URL=http://localhost:5500
+      - NODE_OPTIONS=--openssl-legacy-provider
+    depends_on:
+      - backend
     networks:
       - transfer-network
 

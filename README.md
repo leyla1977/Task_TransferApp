@@ -5,6 +5,7 @@ Task_TransferApp/
 │   ├── src/main/java/ru.netology.springBootDemo
 │           ├──configuration
 │           ├──controller
+│           ├──exception
 │           ├──model
 │           ├──service
 │   ├── src/main/resource/application.properties - основные настройки
@@ -13,7 +14,6 @@ Task_TransferApp/
 │ 
 │           ├──controller    # Unit-тесты с Mockito
 │           ├──integration   # Интеграционные тесты с Testcontainers      
-│           ├──model         
 │           ├──service├      # Unit-тесты с Mockito
 
 │   ├── src/test/resource/application-test.properties - настройки для тестов
@@ -32,33 +32,18 @@ docker-compose up --build
 2. **# Установка зависимостей и запуск**
 в Command Prompt:
 npm install
-REACT_APP_API_URL=http://localhost:5500 npm start
+REACT_APP_API_URL=http://localhost:5502 npm start
 
 3. **Доступ к приложению**
-Backend API: http://localhost:5500
+Backend API: http://localhost:5502
 Frontend: http://localhost:3000
 Логи операций: в файле transfer.log в директории C:\Work\Java\Task_TransferApp\backend\transfer.log
 
 4. **Тестирование при помощи CURL**
    в Git bash:
    # Перевод денег
-curl -X POST http://localhost:5500/transfer \
-  -H "Content-Type: application/json" \
-  -d '{
-    "cardFromNumber": "1234567812345678",
-    "cardToNumber": "8765432187654321",
-    "cardFromValidTill": "12/25",
-    "cardFromCVV": "123",
-    "amount": {
-      "value": 1000,
-      "currency": "RUB"
-    }
-  }'
+curl -X POST http://localhost:5502/transfer -H "Content-Type: application/json" -d "{\"cardFromNumber\": \"1234567812345678\", \"cardToNumber\": \"8765432187654321\", \"cardFromValidTill\": \"12/25\", \"cardFromCVV\": \"123\", \"amount\": { \"value\": 1000, \"currency\": \"RUB\" } }"'
 
 # Подтверждение операции
-curl -X POST http://localhost:5500/confirmOperation \
-  -H "Content-Type: application/json" \
-  -d '{
-    "operationId": "123e4567-e89b-12d3-a456-426614174000",
-    "code": "0000"
+curl -X POST http://localhost:5502/confirmOperation -H "Content-Type: application/json" -d "{\"operationId\": \"123e4567-e89b-12d3-a456-426614174000\", \"code\": \"0000\" }"code": "0000"
   }'
